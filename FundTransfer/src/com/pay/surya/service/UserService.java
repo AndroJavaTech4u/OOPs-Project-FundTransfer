@@ -1,5 +1,7 @@
 package com.pay.surya.service;
 
+import com.pay.surya.bean.User;
+
 public interface UserService {
 
 	public void login();
@@ -17,4 +19,6 @@ public interface UserService {
 	public void withdraw();
 
 	public void ChangePin();
+	
+	public void createLog(User user,String msg);
 }

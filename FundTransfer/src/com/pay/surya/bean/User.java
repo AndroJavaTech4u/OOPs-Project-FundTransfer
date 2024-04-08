@@ -4,18 +4,22 @@ public class User implements Serializable
 {
 
 private static final long serialVersionUID = 1L;
-private String userName,email,ifscCode,bankName,mobile,acccountNumber,history;
-private int accountPin;
-private double accountBalance;
+private String userName,email,ifscCode,bankName,mobile,acccountNumber,history,type;
 
-
-public User() {
-	super();
+public User()
+{
+	
 }
 
+@Override
+public String toString() {
+	return "User [userName=" + userName + ", email=" + email + ", ifscCode=" + ifscCode + ", bankName=" + bankName
+			+ ", mobile=" + mobile + ", acccountNumber=" + acccountNumber + ", history=" + history + ", type=" + type
+			+ ", accountPin=" + accountPin + ", accountBalance=" + accountBalance + "]";
+}
 
 public User(String userName, String email, String ifscCode, String bankName, String mobile, String acccountNumber,
-		String history, int accountPin, double accountBalance) {
+		String history, String type, int accountPin, double accountBalance) {
 	super();
 	this.userName = userName;
 	this.email = email;
@@ -24,9 +28,14 @@ public User(String userName, String email, String ifscCode, String bankName, Str
 	this.mobile = mobile;
 	this.acccountNumber = acccountNumber;
 	this.history = history;
+	this.type = type;
 	this.accountPin = accountPin;
 	this.accountBalance = accountBalance;
 }
+private int accountPin;
+private double accountBalance;
+
+
 
 public String getUserName() {
 	return userName;
@@ -70,6 +79,12 @@ public String getHistory() {
 public void setHistory(String history) {
 	this.history = history;
 }
+public String getType() {
+	return type;
+}
+public void setType(String type) {
+	this.type = type;
+}
 public int getAccountPin() {
 	return accountPin;
 }
@@ -87,12 +102,5 @@ public static long getSerialversionuid() {
 }
 
 
-@Override
-public String toString() {
-	return "User [userName=" + userName + ", email=" + email + ", ifscCode=" + ifscCode + ", bankName=" + bankName
-			+ ", mobile=" + mobile + ", acccountNumber=" + acccountNumber + ", history=" + history + ", accountPin="
-			+ accountPin + ", accountBalance=" + accountBalance + "]";
-}
-
-
+ 
 }
