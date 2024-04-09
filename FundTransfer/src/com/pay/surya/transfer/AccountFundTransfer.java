@@ -83,11 +83,37 @@ public class AccountFundTransfer implements UserService {
 
 		else if (menuChoice == 4) {
 			if (activeAcc == 1) {
-				FundTransfer(100, 123456, user1, user2);
-
+				this.checkAccount(user1,user2);
 			}
+			else
+			{
+			this.checkAccount(user2,user1);
+					
+			}
+				
 		}
 
+		else if (menuChoice == 5) {
+			if (activeAcc == 1) {
+				 this.withdraw(user1);			
+				 }
+			else
+			{
+				 this.withdraw(user2);			
+					
+			}
+		}
+		
+		
+		else if (menuChoice == 6) {
+			if (activeAcc == 1) {
+				 this.ChangePin(user1);
+			}
+			else
+			{
+				this.ChangePin(user2);
+			}
+		}
 	}
 
 	@Override
@@ -109,7 +135,7 @@ public class AccountFundTransfer implements UserService {
 				login();
 			}
 		}
-
+	
 		else if (accNumber.equalsIgnoreCase(user2.getAcccountNumber())) {
 
 			System.out.println("Eneter 6 digit Pin !!!");
@@ -124,6 +150,13 @@ public class AccountFundTransfer implements UserService {
 				login();
 			}
 		}
+	
+	else
+	{
+		System.out.println("!! Your Account Does not Exist !!");
+		mainMenu();
+	}
+
 
 	}
 
@@ -265,7 +298,10 @@ public class AccountFundTransfer implements UserService {
 
 	@Override
 	public void Logout(User user) {
-		// TODO Auto-generated method stub
+		 activeAcc=0;
+		 System.out.println("!!Logout Successfully !!!");
+		 createLog(user, "Account Logout ");
+		  mainMenu();
 
 	}
 
@@ -336,8 +372,25 @@ public class AccountFundTransfer implements UserService {
 	}
 
 	@Override
-	public void ChangePin() {
-		// TODO Auto-generated method stub
+	public void ChangePin(User user) {
+		 print("!!~ Eneter Your Old Pin");
+		 int oldPin=scanner.nextInt();
+		 if(oldPin==user.getAccountPin())
+		 {
+			 print("!!~ Eneter Your New Pin");
+			 int newPin=scanner.nextInt();
+			 user.setAccountPin(newPin);
+			 print("*********Your Pin has updated successfully************");
+			 mainMenu();
+			 
+			 
+		 }
+		 else
+		 {
+			 print("!!~ You have Entered Wrong  Pin "); 
+			 mainMenu();
+			 
+		 }
 
 	}
 
@@ -352,6 +405,53 @@ public class AccountFundTransfer implements UserService {
 
 		}
 		user.setHistory(msg + " on " + Utils.getTimestamp() + "\n" + history);
+	}
+
+	@Override
+	public void checkAccount(User fromUser, User toUser) {
+		 
+		System.out.println("!!~ Eneter Receiver Account no . You wnat to send Money");
+		String accountNo=scanner.next();
+		if(accountNo.equalsIgnoreCase(fromUser.getAcccountNumber()))
+		{
+			System.out.println("!!~ You can not send Money to Own Account");
+			mainMenu();
+		}
+		else if(accountNo.equalsIgnoreCase(toUser.getAcccountNumber()))
+				{
+			    print("!! ~ You are Sending Money to "+ toUser.getUserName());
+			    print("!! ~ Enter Amount");
+			     int  amount=scanner.nextInt();
+			     print("!! ~ Enter 6 Digit Pin");
+			     int  pin=scanner.nextInt();
+			    if(!ValidateUser.verifyPin(pin, fromUser))
+			    {
+			    	print("!!~ In Correct Pin");
+			    	mainMenu();
+			    }
+			    
+		  if(activeAcc==1)
+		  {
+			  
+			  FundTransfer(amount, pin, fromUser, toUser);
+		  }
+		  else
+		  {
+
+			  FundTransfer(amount, pin, toUser, fromUser);
+			  
+		  }
+			    
+				}
+		
+		else
+		{
+			System.out.println("!! This Account number Does not Exist... ");
+			mainMenu(); 
+			
+			
+		}
+		
 	}
 
 }
